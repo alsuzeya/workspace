@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-mongo-deploy
+spec:
+  selector:
+    matchLabels:
+      app: mongo-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-service
+    spec:
+      containers:
+      - name: mongo-service
+        image: mongo:4.4-focal
+        envFrom:
+        - secretRef:
+          name: mongo-secret
+    args:
+    - env
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-secret
+data:
+  MONGO_INITDB_ROOT_USERNAME: YWRtaW4=
+  MONGO_INITDB_ROOT_PASSWORD: cGFzc3dvcmQ=
