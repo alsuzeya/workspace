@@ -5,10 +5,13 @@ metadata:
   annotations:
     kubernetes.io/change-cause: "deploying v3"
 spec:
+  minReadySeconds: 10
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: order-service
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:

@@ -3,12 +3,18 @@ kind: Deployment
 metadata:
   name: order-service-deploy
   annotations:
-    kubernetes.io/change-cause: "deploying v3"
+    kubernetes.io/change-cause: "deploying v2: RollingUpdate:maxSurge:0:maxunaxunavailable:1"
 spec:
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: order-service
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
@@ -16,7 +22,7 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: vinsdocker/k8s-app:v3
+        image: vinsdocker/k8s-app:v2
         ports:
           - name: "app-port"
             containerPort: 80
