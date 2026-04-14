@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /product 
+        pathType: Prefix
+        backend:
+          service:
+            name: product-service
+            port: 
+              number: 80 #clusterIP port for this clusterIP service
+  - http:
+      paths:
+      - path: /user 
+        pathType: Prefix
+        backend:
+          service:
+            name: user-service 
+            port: 
+              number: 80 #clusterIP port for this clusterIP service
+  - http:
+      paths:
+      - path: / #homepage
+        pathType: Prefix
+        backend:
+          service:
+            name: home-service
+            port: 
+              number: 80 #clusterIP port for this clusterIP service
